@@ -23,11 +23,11 @@ int adj(int pos1, int pos2) {
         return true;
     }
     switch(pos1){
-        case 0:
+        case 1:
             if(pos2 == 2 || pos2 == 4) {
                 return true;
             }
-        case 1:
+        case 2:
             if(pos2 == 1 || pos2 == 3) {
                 return true;
             }
@@ -95,7 +95,6 @@ bool movePiece(int &board, int pos1, int pos2, int p) {
     }
     board -= boardState(board, pos1) * Power(10, (9 - pos1));
     board += p * Power(10, (9-pos2));
-    cout << board;
     return true;
 }
 
@@ -115,7 +114,3 @@ int formLine(int board) {
 
 /* You may write a main() in this file for debugging purpose, but it must be
    removed or commented in your submitted version. */
-int main() {
-    int board = 110001222;
-    cout << formLine(board);
-}
