@@ -71,26 +71,35 @@ void printBoards(char board1[][N], char board2[][N], bool gameMode) {
         }
         cout << "\n";
     }
-    // print row indexes and board content for both game boards
-    // TODO: Add your code
 }
 
 // Check if the specified location (y, x) is within the board
 bool isValidCell(int y, int x) {
-    // TODO: Add your code
+    if (y > N || x > N || y < 1 || x < 1) {
+        return false;
+    }
     return true;
 }
 
 // Check if a shoot location (y, x) is valid
 bool isValidShoot(char board[][N], int y, int x) {
-    // TODO: Add your code
+    if (isValidCell(y, x) == false) {
+        return false;
+    }
+    if (board[y - 1][x - 1] == MISS || board[y - 1][x - 1] == HIT) {
+        return false;
+    }
     return true;
 }
 
 // Convert ship letter to its index in the ship type array
 int indexOf(char ship) {
-    // TODO: Add your code
-    return 1;
+    for (int i = 0; i < 5; i++) {
+        if (SHIP_TYPE[i][0] == ship) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 // Carry out a shot on the specified board at location (y, x)
