@@ -1,6 +1,6 @@
-// Name:       xxx
-// Student ID: xxxxxxxxxx
-// Email:      xxx
+// Name:       Cheung Hop Cheung
+// Student ID: 1155191857
+// Email:      1155191857@link.cuhk.edu.hk
 
 #include <iostream>
 #include <iomanip>
@@ -12,7 +12,15 @@ using namespace std;
 
 // Return a 5-letter string showing which ships of the specified fleet have sunk
 string fleetStatus(Fleet fleet) {
-    // TODO: Add your code
+    string result = "";
+    for (int i = 0; i < 5; i++) {
+        if (fleet.alive[i] > 0) {
+            result += SHIP_TYPE[i][0];
+        } else {
+            result += HIT;
+        }
+    }
+    return result;
 }
 
 // Print the status string of each fleet
@@ -35,7 +43,34 @@ void printBoards(char board1[][N], char board2[][N], bool gameMode) {
             cout << setw(2) << char('A' + j);
     }
     cout << endl;
-
+    for (int row = 1; row <= N; row ++) {
+        if (row < 10) {
+            cout << " " << row;
+        } else {
+            cout << row;
+        }
+        for (int col = 1; col <= N; col++) {
+            if (gameMode == 1) {
+                if (board1[row - 1][col -1] != HIT || board1[row - 1][col -1] != MISS) {
+                    cout << " " << BLANK;
+                } else {
+                    cout << " " << board1[row - 1][col - 1];
+                }
+            } else {
+                cout << " " << board1[row - 1][col - 1];
+            }
+        }
+        cout << "  ";
+        if (row < 10) {
+            cout << " " << row;
+        } else {
+            cout << row;
+        }
+        for (int col = 1; col <= N; col++) {
+            cout << " " << board2[row - 1][col - 1];
+        }
+        cout << "\n";
+    }
     // print row indexes and board content for both game boards
     // TODO: Add your code
 }
@@ -43,21 +78,25 @@ void printBoards(char board1[][N], char board2[][N], bool gameMode) {
 // Check if the specified location (y, x) is within the board
 bool isValidCell(int y, int x) {
     // TODO: Add your code
+    return true;
 }
 
 // Check if a shoot location (y, x) is valid
 bool isValidShoot(char board[][N], int y, int x) {
     // TODO: Add your code
+    return true;
 }
 
 // Convert ship letter to its index in the ship type array
 int indexOf(char ship) {
     // TODO: Add your code
+    return 1;
 }
 
 // Carry out a shot on the specified board at location (y, x)
 bool shoot(char board[][N], int y, int x, Fleet* fleet) {
     // TODO: Add your code
+    return true;
 }
 
 // Get location (y, x) from the user via console input
@@ -116,6 +155,7 @@ bool getComputerMove(char board[][N], int& y, int& x) {
 
 // Place ship on board in specified orientation (vertical or horizontal)
 bool placeShip(char board[][N], int y, int x, char ship, bool vertical = false) {
+    return true;
     // TODO: Add your code
 }
 
@@ -136,4 +176,12 @@ void randomlyPlaceShips(char board[][N]) {
 // Manually place all ships on board
 void manuallyPlaceShips(char board[][N]) {
     // TODO: Add your code
+}
+
+int main() {
+    char myBoard[N][N] = { ' ' }, enBoard[N][N] = { ' ' };
+    fill(myBoard[0] + 0, myBoard[N-1] + N, BLANK);
+    fill(enBoard[0] + 0, enBoard[N-1] + N, BLANK);
+    Fleet Test = {"Enemy", {5, 4, 0, 3, 2}};
+    printBoards(myBoard, enBoard, 0);
 }

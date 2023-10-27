@@ -1,6 +1,6 @@
-// Name:       xxx
-// Student ID: xxxxxxxxxx
-// Email:      xxx
+// Name:       Cheung Hop Cheung
+// Student ID: 1155191857
+// Email:      1155191857@link.cuhk.edu.hk
 
 #include <iostream>
 #include "battleshipboard.h"
