@@ -75,7 +75,7 @@ void printBoards(char board1[][N], char board2[][N], bool gameMode) {
 
 // Check if the specified location (y, x) is within the board
 bool isValidCell(int y, int x) {
-    if (y > N || x > N || y < 1 || x < 1) {
+    if (y > N || x > N || y < 0 || x < 0) {
         return false;
     }
     return true;
@@ -86,7 +86,7 @@ bool isValidShoot(char board[][N], int y, int x) {
     if (isValidCell(y, x) == false) {
         return false;
     }
-    if (board[y - 1][x - 1] == MISS || board[y - 1][x - 1] == HIT) {
+    if (board[y][x] == MISS || board[y][x] == HIT) {
         return false;
     }
     return true;
@@ -104,8 +104,18 @@ int indexOf(char ship) {
 
 // Carry out a shot on the specified board at location (y, x)
 bool shoot(char board[][N], int y, int x, Fleet* fleet) {
-    // TODO: Add your code
-    return true;
+    char pos = board[y][x];
+    if (pos != BLANK) {
+        fleet -> alive[indexOf(pos)] -= 1;
+        board[y][x] = HIT;
+        if (fleet -> alive[indexOf(pos)] == 0) {
+            cout << "Enemy " << SHIP_TYPE[indexOf(pos)] << " sank!\n";
+        }
+        return true;
+    } else {
+        board[y][x] = MISS;
+    }
+    return false;
 }
 
 // Get location (y, x) from the user via console input
@@ -117,8 +127,14 @@ bool getCellFromConsole(int& y, int& x) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return false;
     }
-    // TODO: Add your code
-    
+    if (col >= 'A' && col <= 'Z') {
+        x = col - 'A';
+    } else if (col >= 'a' && col <= 'z') {
+        x = col - 'a';
+    } else {
+        return false;
+        }
+    y = row - 1;
     return true;
 }
 
@@ -164,8 +180,30 @@ bool getComputerMove(char board[][N], int& y, int& x) {
 
 // Place ship on board in specified orientation (vertical or horizontal)
 bool placeShip(char board[][N], int y, int x, char ship, bool vertical = false) {
+    int length = SHIP_SIZE[indexOf(ship)]; 
+    int* dir;
+    if (vertical) {
+        dir = &y;
+    } else {
+        dir = &x;
+    }
+    for (int i = 0; i < length ; i++) {
+        *dir += 1;
+        if (isValidCell(y, x) == false) {
+            cout << "thios";
+            return false;
+        }
+        if (board[y][x] != BLANK) {
+            return false;
+        }
+    }
+    for (int i = 0; i < length; i++) {
+        *dir -= 1;
+        board[y][x] = ship;
+    }
+    printBoards(board, board, 0);
+
     return true;
-    // TODO: Add your code
 }
 
 // Randomly place all ships on board
@@ -184,13 +222,25 @@ void randomlyPlaceShips(char board[][N]) {
 
 // Manually place all ships on board
 void manuallyPlaceShips(char board[][N]) {
-    // TODO: Add your code
-}
-
-int main() {
-    char myBoard[N][N] = { ' ' }, enBoard[N][N] = { ' ' };
-    fill(myBoard[0] + 0, myBoard[N-1] + N, BLANK);
-    fill(enBoard[0] + 0, enBoard[N-1] + N, BLANK);
-    Fleet Test = {"Enemy", {5, 4, 0, 3, 2}};
-    printBoards(myBoard, enBoard, 0);
+    char orientation;
+    int y, x;
+    for (int i = 0; i < 5; i++) {
+        while (true) {
+            cout << "Enter h/v and location for " << SHIP_TYPE[i] << ": ";
+            cin >> orientation;
+            if (getCellFromConsole(y, x) == false) {
+                cout << "Invalid ship location!\n";
+                continue;
+            }
+            if (orientation != 'V' && orientation != 'v' && orientation != 'H' && orientation != 'h') {
+                cout << "Invalid ship location!\n";
+                continue;
+            }
+            if (placeShip(board, y, x, SHIP_TYPE[i][0], ((orientation == 'V' || orientation == 'v')))) {
+                break;
+            } else {
+                cout << "Invalid ship location!\n";
+            }
+        }
+    }
 }

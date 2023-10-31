@@ -13,8 +13,26 @@ int main() {
     unsigned int seed;
     bool gameMode = false;
     bool manualSetup = false;
+    char temp;
 
-    // TODO: Add your code
+    cout << "Enter seed: ";
+    cin >> seed;
+
+    cout << "Play in game mode (Y/N)? ";
+    cin >> temp;
+    if (temp == 'Y' || temp == 'y') {
+        gameMode = true;
+    } else if (temp == 'N' || temp == 'n') {
+        gameMode = false;
+    }
+
+    cout << "Manually set up ships (Y/N)? ";
+    cin >> temp;
+        if (temp == 'Y' || temp == 'y') {
+        manualSetup = true;
+    } else if (temp == 'N' || temp == 'n') {
+        manualSetup = false;
+    }
 
     // initialize boards and fleets
     char myBoard[N][N] = { ' ' }, enBoard[N][N] = { ' ' };
