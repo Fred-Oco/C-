@@ -51,7 +51,7 @@ void printBoards(char board1[][N], char board2[][N], bool gameMode) {
         }
         for (int col = 1; col <= N; col++) {
             if (gameMode == 1) {
-                if (board1[row - 1][col -1] != HIT || board1[row - 1][col -1] != MISS) {
+                if (board1[row - 1][col -1] != HIT && board1[row - 1][col -1] != MISS) {
                     cout << " " << BLANK;
                 } else {
                     cout << " " << board1[row - 1][col - 1];
@@ -75,7 +75,7 @@ void printBoards(char board1[][N], char board2[][N], bool gameMode) {
 
 // Check if the specified location (y, x) is within the board
 bool isValidCell(int y, int x) {
-    if (y > N || x > N || y < 0 || x < 0) {
+    if (y > N - 1|| x > N - 1 || y < 0 || x < 0) {
         return false;
     }
     return true;
@@ -188,21 +188,18 @@ bool placeShip(char board[][N], int y, int x, char ship, bool vertical = false) 
         dir = &x;
     }
     for (int i = 0; i < length ; i++) {
-        *dir += 1;
         if (isValidCell(y, x) == false) {
-            cout << "thios";
             return false;
         }
         if (board[y][x] != BLANK) {
             return false;
         }
+        *dir += 1;
     }
     for (int i = 0; i < length; i++) {
         *dir -= 1;
         board[y][x] = ship;
     }
-    printBoards(board, board, 0);
-
     return true;
 }
 
@@ -215,6 +212,7 @@ void randomlyPlaceShips(char board[][N]) {
             bool vertical = bool(rand() % 2);
             getRandomCell(y, x);
             if (placeShip(board, y, x, ship, vertical))
+
                 break;
         }
     }

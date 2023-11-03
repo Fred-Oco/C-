@@ -17,12 +17,12 @@ int main() {
 
     cout << "Enter seed: ";
     cin >> seed;
-
+    srand(seed);
     cout << "Play in game mode (Y/N)? ";
     cin >> temp;
     if (temp == 'Y' || temp == 'y') {
         gameMode = true;
-    } else if (temp == 'N' || temp == 'n') {
+    } else{
         gameMode = false;
     }
 
@@ -30,7 +30,7 @@ int main() {
     cin >> temp;
         if (temp == 'Y' || temp == 'y') {
         manualSetup = true;
-    } else if (temp == 'N' || temp == 'n') {
+    } else {
         manualSetup = false;
     }
 
@@ -83,6 +83,15 @@ int main() {
             // check if all opponent ships have sunk
             // (if so, set winner and game over flag to leave the loop)
             // TODO: Add your code
+            gameOver = true;
+            for (int i = 0;i < 5; i++) {
+                if (opponent -> alive[i] != 0) {
+                    gameOver = false;
+                }
+            }
+            if (gameOver) {
+                winner = attacker -> name;
+            }
         }
 
         // swap the player's turn
@@ -93,5 +102,8 @@ int main() {
 
     // print final gameboards, game over message and the winner
     // TODO: Add your code
-
+    printBoards(enBoard, myBoard, 1);
+    printStatus(enFleet, myFleet);
+    cout << "Game over" << "\n";
+    cout << winner << " fleet wins!";
 }
