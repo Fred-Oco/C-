@@ -1,0 +1,1 @@
+g++ -o main battleshipboard.cpp battleshipgame.cpp && ./main
