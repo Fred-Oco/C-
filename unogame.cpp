@@ -76,8 +76,10 @@ int main()
 	};
 
 	// Shuffle the deck and deal cards to each player
-	drawPile.print();
-	cout << "-----" << endl;
+	if (debugMode) {
+        cout << "Cards created:" << endl;
+        drawPile.print();
+    }
 	drawPile.shuffle();
 	for (int i = 0; i < P; i++) {
 		players[i]->drawCard(&drawPile, H);
@@ -88,20 +90,29 @@ int main()
 	drawPile.draw(firstCard, 1);
 	discardPile.stack(firstCard.at(0)); 
 	if (debugMode) {
-		cout << "Draw Pile:" << endl;
+		cout << "Draw pile after shuffling and dealing:" << endl;
 		drawPile.print();
 	}
 
 	// Start the game loop
+	string fill(8, ' ');
 	while(true) {
 		// TODO:
 		// Print the "turn header" which shows discard pile's top card, 
 		// current color and current size of draw pile.
-		
+		cout << "=========================================================\n";
+		cout << "Turn " << *(uno.turn) + 1 << ":\n";
+		cout << "Discard Pile: " << uno.discardPile -> top() -> toString();
+		string cur_col = COLORS[(int)uno.discardPile -> top() -> getColor()];
+		cout << "  " << "Current Color: " << fill.replace(fill.begin(), fill.begin() + cur_col.size(), cur_col);
+		cout << "Draw Pile: " << uno.drawPile -> size() << endl;
+		cout << "---------------------------------------------------------\n";
 		// Print the name of the current player.
 		// (Hint: you can use the turn integer to index the players array
 		//  to get a pointer to the current player.)
-
+		player = players[*(uno.turn) % P];
+		cout << player -> getName() << ":\n";
+		player -> playCard(player -> pickCard(uno), uno);
 		// If cardsToDraw > 0, current player draws the required # cards.
 		// If turnSkipped is true, current player skips picking and playing 
 		// a card in this turn.
@@ -109,7 +120,12 @@ int main()
 		// selected card in hand.
 		// Then call the playCard() method with the obtained index if it is 
 		// not PASSED and not DRAWN.
-
+		if (*uno.cardsToDraw > 0) {
+			player -> drawCard(uno.drawPile, *uno.cardsToDraw);
+			*uno.cardsToDraw = 0;
+		} else if (*uno.turnSkipped) {} else {
+			player -> playCard(player -> pickCard(uno), uno);
+		}
 		// Check game over condition. Exit the game loop if either:
 		// (1) current player's hand has no cards.
 		// (2) all players consecutively passed their turns 

@@ -1,1 +1,1 @@
-g++ -o main battleshipboard.cpp battleshipgame.cpp && ./main
+g++ -Wall -pedantic -std=c++14 -o main ActionCard.cpp Bot.cpp Card.cpp Deck.cpp DiscardPile.cpp Draw2.cpp DrawPile.cpp Man.cpp Player.cpp Reverse.cpp Skip.cpp unogame.cpp WildCard.cpp WildDraw4.cpp && ./main

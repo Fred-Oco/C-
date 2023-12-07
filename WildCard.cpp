@@ -69,5 +69,5 @@ void WildCard::play(GameState& uno) {
 
 string WildCard::toString() {
     // Return a string representation of this card with color code shown as 'W'
-    return string() + "[W" + ACTIONS[int(ActionCard::getAction())][0] + "]"
+    return string() + "[W" + ACTIONS[int(ActionCard::getAction())][0] + "]";
 }

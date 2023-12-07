@@ -33,12 +33,15 @@ int Man::pickCard(GameState& uno) {
             cout << "x";
         }
         cout << "]";
-        Player::hand[i] -> toString();
+        cout << Player::hand[i] -> toString() << " ";
     }
 
     // Show the [D]raw option if draw pile still has cards.
     if (uno.drawPile -> size() > 0) {
-        cout << "[D]raw";
+        if (Player::hand.size() == 10) {
+            cout << "\n";
+        }
+        cout << " [D]raw\n";
         ForcePass = false;
     }
 
@@ -96,4 +99,5 @@ int Man::pickCard(GameState& uno) {
         }
         return choice_int;
     }
+    return -1;
 }

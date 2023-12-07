@@ -91,6 +91,6 @@ Color Player::mostFrequentColor() {
             return Color(i + 1);
         }
     }
-
+    return Color::Wild;
 }
 
