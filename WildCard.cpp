@@ -14,7 +14,7 @@ bool WildCard::match(Card* /*top*/) {
     //?
     // Add one statement here to complete the color matching logic 
     // for this card type
-    return false;
+    return true;
 }
 
 void WildCard::play(GameState& uno) {

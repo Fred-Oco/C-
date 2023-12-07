@@ -96,6 +96,8 @@ int main()
 
 	// Start the game loop
 	string fill(8, ' ');
+	string cur_col;
+	int pick, pass_count;
 	while(true) {
 		// TODO:
 		// Print the "turn header" which shows discard pile's top card, 
@@ -103,7 +105,7 @@ int main()
 		cout << "=========================================================\n";
 		cout << "Turn " << *(uno.turn) + 1 << ":\n";
 		cout << "Discard Pile: " << uno.discardPile -> top() -> toString();
-		string cur_col = COLORS[(int)uno.discardPile -> top() -> getColor()];
+		cur_col = COLORS[(int)uno.discardPile -> top() -> getColor()];
 		cout << "  " << "Current Color: " << fill.replace(fill.begin(), fill.begin() + cur_col.size(), cur_col);
 		cout << "Draw Pile: " << uno.drawPile -> size() << endl;
 		cout << "---------------------------------------------------------\n";
@@ -112,7 +114,6 @@ int main()
 		//  to get a pointer to the current player.)
 		player = players[*(uno.turn) % P];
 		cout << player -> getName() << ":\n";
-		player -> playCard(player -> pickCard(uno), uno);
 		// If cardsToDraw > 0, current player draws the required # cards.
 		// If turnSkipped is true, current player skips picking and playing 
 		// a card in this turn.
@@ -122,19 +123,36 @@ int main()
 		// not PASSED and not DRAWN.
 		if (*uno.cardsToDraw > 0) {
 			player -> drawCard(uno.drawPile, *uno.cardsToDraw);
-			*uno.cardsToDraw = 0;
-		} else if (*uno.turnSkipped) {} else {
-			player -> playCard(player -> pickCard(uno), uno);
+			cout << "Turn skipped!\n";
+			*(uno.cardsToDraw) = 0;
+			*(uno.turnSkipped) = false;
+		} else if (*uno.turnSkipped) {
+			cout << "Turn skipped!\n";
+			*(uno.cardsToDraw) = 0;
+			*(uno.turnSkipped) = false;
+		} else {
+			pick = player -> pickCard(uno);
+			if (pick != DRAWN && pick != PASSED) {
+				player -> playCard(pick, uno);
+			}
 		}
 		// Check game over condition. Exit the game loop if either:
 		// (1) current player's hand has no cards.
 		// (2) all players consecutively passed their turns 
 	    //     (i.e., no one can play a card or draw).
 
+		if (pick == PASSED) {
+			pass_count += 1;
+		} else {
+			pass_count = 0;
+		}
+		if (player -> handSize() == 0 || pass_count == P || *(uno.turn) == turnsMax) {
+			break;
+		}
 		// Reset cardsToDraw and turnSkipped for clean state for next turn.
-
 		// Update the turn integer to let the next player become current.
-	
+		*(uno.turn) += *(uno.delta);
+		
 	}
 	// TODO:
 	// Print the game over message.

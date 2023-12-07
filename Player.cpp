@@ -39,7 +39,7 @@ void Player::printHand(bool flipped) {
     }
     } else {
         for (int i = 0; i < hand.size(); i++) { 
-            cout << " [Uno] ";
+            cout << " [Uno]";
         }
     }
 
