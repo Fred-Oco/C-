@@ -74,6 +74,7 @@ int Man::pickCard(GameState& uno) {
     while (true) {
         cout << "Enter option: ";
         cin >> choice;
+        choice_str.clear();
         choice_str << choice;
         if (choice == "D" && uno.drawPile -> size() > 0) {
             uno.drawPile -> draw(Player::hand);
@@ -87,7 +88,6 @@ int Man::pickCard(GameState& uno) {
         }
         choice_str >> choice_int;
         if (choice_int < 0 || choice_int > Player::hand.size() - 1 || Player::hand[choice_int] -> match(Top) == false) {
-            cout << "This";
             cout << "Invalid option!\n";
             continue;
         }

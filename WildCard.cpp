@@ -59,7 +59,7 @@ void WildCard::play(GameState& uno) {
                     Card::setColor(Color::Blue);
                     break;
                 default:
-                    cout << "Invalid option!";
+                    cout << "Invalid option!\n";
             }
         }
     }

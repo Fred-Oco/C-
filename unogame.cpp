@@ -98,7 +98,7 @@ int main()
 	string fill(8, ' ');
 	string cur_col;
 	string filler(8, ' ');
-	int pick, pass_count;
+	int pick, pass_count, player_inx = 0;
 	while(true) {
 		// TODO:
 		// Print the "turn header" which shows discard pile's top card, 
@@ -114,7 +114,7 @@ int main()
 		// Print the name of the current player.
 		// (Hint: you can use the turn integer to index the players array
 		//  to get a pointer to the current player.)
-		player = players[(*(uno.turn) % uno.P) * *(uno.delta)];
+		player = players[player_inx % uno.P];
 		cout << player -> getName() << ":\n";
 		// If cardsToDraw > 0, current player draws the required # cards.
 		// If turnSkipped is true, current player skips picking and playing 
@@ -144,6 +144,7 @@ int main()
 	    //     (i.e., no one can play a card or draw).
 
 		if (pick == PASSED) {
+			cout << "Turn passed!\n";
 			pass_count += 1;
 		} else {
 			pass_count = 0;
@@ -154,10 +155,22 @@ int main()
 		// Reset cardsToDraw and turnSkipped for clean state for next turn.
 		// Update the turn integer to let the next player become current.
 		*(uno.turn) += 1;
-		
+		player_inx += *(uno.delta);
 	}
 	// TODO:
 	// Print the game over message.
 	// List all players' hands and the sum of points of all cards in hand.
 	// Print the name of the winner. 
+	cout << "**********\n";
+	cout << "Game Over!\n";
+	cout << "**********\n";
+	Player *winner = uno.players[0];
+	for (int i = 0; i < uno.P; i++) {
+		cout << uno.players[i] -> getName() << " owes " << setw(4) << uno.players[i] -> handPoints() << " point(s): ";
+		uno.players[i] -> printHand();
+		if (uno.players[i] -> handPoints() < winner -> handPoints()) {
+			winner = uno.players[i];
+		}
+	}
+	cout << "The winner is " << winner -> getName() << "!";
 }

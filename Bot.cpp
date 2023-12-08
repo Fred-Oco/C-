@@ -35,11 +35,12 @@ int Bot::pickCard(GameState& uno) {
         Player::drawCard(uno.drawPile);
         Card* cur = Player::hand[Player::hand.size() - 1];
         if (uno.debugMode) {
-            cout << "Drawn " << cur -> toString();
+            cout << "Drawn " << cur -> toString() << "\n";
         }
         if (cur -> match(uno.discardPile -> top())) {
             return Player::hand.size() - 1;
         }
+        return DRAWN;
     }
-    return DRAWN;
+    return PASSED;
 }

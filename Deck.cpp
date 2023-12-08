@@ -33,10 +33,10 @@ void Deck::shuffle() {
 
 void Deck::print() {
     for (int i = 0; i < cards.size(); i++) {
-        if (i % 10 == 0) {
+        if (i % 10 == 0 && i != 0) {
             cout << "\n";
         }
-        cout << " " << cards[i]->toString() << "=" << setw(2) << (int)cards[i] -> getValue();
+        cout << cards[i]->toString() << "=" << setw(2) << (int)cards[i] -> getValue() << " ";
     }
     cout << "\n";
 }

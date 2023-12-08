@@ -35,11 +35,17 @@ void Player::printHand(bool flipped) {
     // Otherwise, print the back of each card, i.e., "[Uno]".
     if (flipped) {
         for (int i = 0; i < hand.size(); i++) {
-            cout << " " << hand[i] -> toString() << " ";
+            if (i % 10 == 0 && i != 0) {
+                cout << "\n";
+            }
+            cout << hand[i] -> toString() << " ";
     }
     } else {
-        for (int i = 0; i < hand.size(); i++) { 
-            cout << " [Uno]";
+        for (int i = 0; i < hand.size(); i++) {
+            if (i % 10 == 0 && i != 0) {
+                cout << "\n";
+            } 
+            cout << "[Uno] ";
         }
     }
 
