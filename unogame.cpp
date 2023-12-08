@@ -97,11 +97,13 @@ int main()
 	// Start the game loop
 	string fill(8, ' ');
 	string cur_col;
+	string filler(8, ' ');
 	int pick, pass_count;
 	while(true) {
 		// TODO:
 		// Print the "turn header" which shows discard pile's top card, 
 		// current color and current size of draw pile.
+		fill.replace(fill.begin(), fill.end(), filler);
 		cout << "=========================================================\n";
 		cout << "Turn " << *(uno.turn) + 1 << ":\n";
 		cout << "Discard Pile: " << uno.discardPile -> top() -> toString();
@@ -112,7 +114,7 @@ int main()
 		// Print the name of the current player.
 		// (Hint: you can use the turn integer to index the players array
 		//  to get a pointer to the current player.)
-		player = players[*(uno.turn) % P];
+		player = players[(*(uno.turn) % uno.P) * *(uno.delta)];
 		cout << player -> getName() << ":\n";
 		// If cardsToDraw > 0, current player draws the required # cards.
 		// If turnSkipped is true, current player skips picking and playing 
@@ -151,7 +153,7 @@ int main()
 		}
 		// Reset cardsToDraw and turnSkipped for clean state for next turn.
 		// Update the turn integer to let the next player become current.
-		*(uno.turn) += *(uno.delta);
+		*(uno.turn) += 1;
 		
 	}
 	// TODO:

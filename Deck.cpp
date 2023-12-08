@@ -36,6 +36,7 @@ void Deck::print() {
         if (i % 10 == 0) {
             cout << "\n";
         }
-        cout << " " << cards[i]->toString() << " ";
+        cout << " " << cards[i]->toString() << "=" << setw(2) << (int)cards[i] -> getValue();
     }
+    cout << "\n";
 }

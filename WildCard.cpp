@@ -36,13 +36,13 @@ void WildCard::play(GameState& uno) {
     // to change. Show error message "Invalid option!" if the user input 
     // is not one of the 4 letters.
     // Set color of this card to the selected color. 
-    Player *cur = *uno.players;
+    Player *cur = uno.players[*(uno.turn) % uno.P];
     if (dynamic_cast<Bot *>(cur) != NULL) {
         Card::setColor(cur->mostFrequentColor());
     } else {
         char choice;
         while (Card::getColor() == Color::Wild) {
-            cout << "Choose a color [R, Y, G, B]:";
+            cout << "Choose a color [R, Y, G, B]: ";
             cin >> choice;
             choice = toupper(choice);
             switch(choice) {

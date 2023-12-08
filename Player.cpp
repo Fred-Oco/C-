@@ -79,16 +79,16 @@ Color Player::mostFrequentColor() {
     int Card_c, max = 0;
     for (int i = 0; i < hand.size(); i++) {
         Card_c = int(hand[i]->getColor());
-        if (Card_c <= 4) {
-            Color_appear[Card_c - 1] += 1;
-            if (Color_appear[Card_c - 1] > max) {
-                max = Color_appear[Card_c - 1];
+        if (Card_c <= 3) {
+            Color_appear[Card_c] += 1;
+            if (Color_appear[Card_c] > max) {
+                max = Color_appear[Card_c];
             }
         }
     }
     for (int i = 0; i < 4; i++) {
         if (Color_appear[i] == max) {
-            return Color(i + 1);
+            return Color(i);
         }
     }
     return Color::Wild;

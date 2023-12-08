@@ -71,13 +71,14 @@ int Man::pickCard(GameState& uno) {
     string choice = "";
     stringstream choice_str;
     int choice_int;
-    while (choice == "") {
+    while (true) {
         cout << "Enter option: ";
         cin >> choice;
         choice_str << choice;
         if (choice == "D" && uno.drawPile -> size() > 0) {
             uno.drawPile -> draw(Player::hand);
-            cout << "Drawn " << Player::hand[Player::hand.size() - 1] -> toString();
+            cout << Player::getName() << " drawn 1 card(s).\n";
+            cout << "Drawn " << Player::hand[Player::hand.size() - 1] -> toString() << endl;
             if (Player::hand[Player::hand.size() - 1] -> match(Top)){
                 return (Player::hand.size() - 1);
             } else {
@@ -86,16 +87,13 @@ int Man::pickCard(GameState& uno) {
         }
         choice_str >> choice_int;
         if (choice_int < 0 || choice_int > Player::hand.size() - 1 || Player::hand[choice_int] -> match(Top) == false) {
+            cout << "This";
             cout << "Invalid option!\n";
             continue;
         }
-        if (choice_int == 0) {
-            try {
-                stoi(choice);
-            } catch(const string err) {
-                cout << "Invalid option!\n";
-                continue;
-            }
+        if (choice_int == 0 && choice != "0") {
+            cout << "Invalid option!\n";
+            continue;
         }
         return choice_int;
     }
